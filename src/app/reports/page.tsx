@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { analysisApi, employeeApi, Analysis, Employee } from "@/lib/api";
+import { analysisApi, employeeApi, Analysis, Employee, hasBackendUrl } from "@/lib/api";
 
 export default function ReportsPage() {
   const [analyses, setAnalyses] = useState<Analysis[]>([]);
@@ -10,6 +10,10 @@ export default function ReportsPage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!hasBackendUrl()) {
+        setLoading(false);
+        return;
+      }
       try {
         const [analysesData, employeesData] = await Promise.all([
           analysisApi.getAll(),

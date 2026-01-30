@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { analysisApi, employeeApi, Analysis, Employee } from "@/lib/api";
+import { analysisApi, employeeApi, Analysis, Employee, hasBackendUrl } from "@/lib/api";
 
 export default function HomePage() {
   const [analyses, setAnalyses] = useState<Analysis[]>([]);
@@ -10,6 +10,10 @@ export default function HomePage() {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (!hasBackendUrl()) {
+        setLoading(false);
+        return;
+      }
       try {
         const [analysesData, employeesData] = await Promise.all([
           analysisApi.getAll(),
@@ -47,6 +51,12 @@ export default function HomePage() {
       <h1 className="text-3xl font-bold text-gray-800 mb-8">
         HR Çalışma Süresi Analiz Sistemi
       </h1>
+
+      {!hasBackendUrl() && (
+        <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg text-amber-800">
+          <strong>Backend bağlı değil.</strong> Verileri görmek için Vercel ortam değişkeninde <code className="bg-amber-100 px-1 rounded">NEXT_PUBLIC_API_URL</code> ile backend adresinizi ayarlayın. Backend&apos;i <a href="https://render.com" target="_blank" rel="noopener noreferrer" className="underline">Render</a> üzerinde deploy edebilirsiniz.
+        </div>
+      )}
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
