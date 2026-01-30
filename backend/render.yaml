@@ -1,0 +1,3 @@
+# Render için örnek ayar (opsiyonel – Dashboard'dan da ayarlayabilirsiniz)
+# Build hatası (metadata-generation-failed) için bu build komutu kullanılır
+# type: web, buildCommand, startCommand. DATABASE_URL'ı Dashboard → Environment'tan ekleyin.

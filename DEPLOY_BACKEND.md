@@ -21,7 +21,7 @@ Backend’i [Render](https://render.com) üzerinde ücretsiz deploy etmek için 
 | **Branch** | `master` |
 | **Root Directory** | `backend` |
 | **Runtime** | Python |
-| **Build Command** | `pip install -r requirements.txt` |
+| **Build Command** | `pip install --upgrade pip setuptools wheel && pip install -r requirements.txt` |
 | **Start Command** | `uvicorn main:app --host 0.0.0.0 --port $PORT` |
 
 ---
@@ -42,7 +42,21 @@ Sonra Web Service’e dönün:
 
 ---
 
-## 4. Deploy
+## 4. Build hatası alırsanız (metadata-generation-failed)
+
+Render loglarında `metadata-generation-failed` veya `Encountered error while generating package metadata` görürseniz:
+
+1. **Build Command** alanını şu şekilde güncelleyin (Dashboard → Service → Settings → Build & Deploy):
+   ```text
+   pip install --upgrade pip setuptools wheel && pip install -r requirements.txt
+   ```
+2. **Save Changes** → **Manual Deploy** → **Deploy latest commit** ile tekrar deneyin.
+
+Bu komut pip ve build araçlarını günceller; çoğu metadata hatası böyle çözülür.
+
+---
+
+## 5. Deploy
 
 1. **Create Web Service** (veya **Save Changes**) tıklayın.
 2. İlk deploy 2–5 dakika sürebilir. **Logs** sekmesinden ilerlemeyi takip edin.
@@ -65,6 +79,7 @@ Bundan sonra sitedeki formlar bu backend’e istek atar.
 ## Özet kontrol listesi
 
 - [ ] Render’da Web Service oluşturuldu, **Root Directory** = `backend`
+- [ ] **Build Command:** `pip install --upgrade pip setuptools wheel && pip install -r requirements.txt`
 - [ ] **Start Command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
 - [ ] PostgreSQL oluşturuldu, **DATABASE_URL** Web Service env’e eklendi
 - [ ] Vercel’de **NEXT_PUBLIC_API_URL** = backend URL (örn. `https://esma-backend.onrender.com`)
