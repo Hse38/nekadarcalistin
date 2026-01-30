@@ -82,4 +82,10 @@ export const analysisApi = {
     const list = data.analyses ?? [];
     return list.map(mapAnalysis);
   },
+  async getById(id: number): Promise<Analysis | null> {
+    const res = await api(`/api/analyses/${id}`);
+    if (!res.ok) return null;
+    const raw = await res.json();
+    return mapAnalysis(raw);
+  },
 };
