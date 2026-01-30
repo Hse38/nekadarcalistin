@@ -54,8 +54,6 @@ function mapAnalysis(raw: {
     id: raw.id,
     employee_id: raw.employee_id,
     year: raw.year,
-    theoretical_working_hours: raw.theoretical_working_hours,
-    actual_working_hours: raw.actual_working_hours,
     theoretical_hours: theoretical,
     actual_hours: actual,
     efficiency_percentage: efficiency,
